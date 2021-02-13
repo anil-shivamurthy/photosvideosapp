@@ -1,13 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import './App.css';
-import Banner from './components/banner';
-import Content from './components/content';
-import Navbar from './components/navbar';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import Banner from "./components/banner";
+import Photocontent from "./components/photocontent";
+import Navbar from "./components/navbar";
 import axios from "axios";
 import { createClient } from "pexels";
 
 function App() {
-
   const [photos, setPhotos] = useState();
 
   useEffect(() => {
@@ -30,12 +29,10 @@ function App() {
       });
   }, []);
 
- 
- return (
+  return (
     <div className="App">
-      <Banner photos={photos}/>
-      <Navbar />
-      <Content photos={photos}/>
+      <Banner photos={photos} />
+      <Navbar photos={photos} />
     </div>
   );
 }
