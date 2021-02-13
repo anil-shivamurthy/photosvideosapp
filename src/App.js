@@ -1,23 +1,41 @@
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
+import Banner from './components/banner';
+import Content from './components/content';
+import Navbar from './components/navbar';
+import axios from "axios";
+import { createClient } from "pexels";
 
 function App() {
-  return (
+
+  const [photos, setPhotos] = useState();
+
+  useEffect(() => {
+    const client = createClient(
+      "563492ad6f91700001000001ee1c1fc96f2645368d9b225576427657"
+    );
+    // client.photos.curated({ per_page: 1 }).then(photos => {...});
+    const url = "https://api.pexels.com/v1/curated";
+    const access_token =
+      "563492ad6f917000010000014060d806c66c47b88b9b4d7f8c487692";
+    axios
+      .get(url, {
+        headers: {
+          Authorization: `${access_token}`,
+        },
+      })
+      .then((data) => {
+        console.log(data);
+        setPhotos(data.data.photos);
+      });
+  }, []);
+
+ 
+ return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Banner photos={photos}/>
+      <Navbar />
+      <Content photos={photos}/>
     </div>
   );
 }
